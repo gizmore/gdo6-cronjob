@@ -6,32 +6,48 @@ use GDO\Core\Method;
 
 /**
  * Baseclass method for a cronjob.
+ * Override runAt() to setup intervals with crontab syntax.
+ * Module_Cronjob takes care of interval computations.
  * 
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 6.1.0
  */
 abstract class MethodCronjob extends Method
 {
 	public abstract function run();
 
+	public function getPermission() { return 'cronjob'; }
+
+	/**
+	 * Override runAt() to set interval via crontab runat syntax.
+	 * @return string
+	 */
 	public function runAt()
 	{
 		return "* * * * *";
 	}
-
-	public function getPermission() { return 'cronjob'; }
+	
+	protected function runHourly()
+	{
+		return "0 * * * *";
+	}
+	
+	protected function runDaily($hour)
+	{
+		return $this->runDailyAt(0);
+	}
+	
+	protected function runDailyAt($hour)
+	{
+		return "0 $hour * * *";
+	}
 	
 	public function execute()
 	{
 		$this->start();
 		$this->run();
 		$this->end();
-	}
-	
-	public function runEvery()
-	{
-	    return 1;
 	}
 
 	###########

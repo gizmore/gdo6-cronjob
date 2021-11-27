@@ -2,21 +2,42 @@
 namespace GDO\Cronjob;
 
 use GDO\Core\GDO_Module;
+use GDO\Date\GDT_Timestamp;
+use GDO\Date\Time;
 
 /**
  * Cronjob stuff.
  * 
- * @TODO add a helper for run frequencies for cronjob methods.
  * @author gizmore
- * @version 6.10.6
+ * @version 6.11.0
  * @since 6.1.0
  */
 class Module_Cronjob extends GDO_Module
 {
 	##############
+	### Config ###
+	##############
+	public function getConfig()
+	{
+		return [
+			GDT_Timestamp::make('last_run')->initialAgo(60),
+		];
+	}
+	
+	public function cfgLastRun()
+	{
+		return $this->getConfigValue('last_run');
+	}
+	
+	public function setLastRun()
+	{
+		$this->saveConfigVar('last_run', Time::getDate());
+	}
+	
+	##############
 	### Module ###
 	##############
-    public function getClasses()
+	public function getClasses()
     {
         return [
             GDO_Cronjob::class,

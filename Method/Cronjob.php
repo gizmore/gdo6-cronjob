@@ -34,7 +34,7 @@ class Cronjob extends MethodForm
 			ob_start();
 			
 			echo "<pre>";
-			\GDO\Core\Cronjob::run();
+			\GDO\Cronjob\Cronjob::run();
 			echo "</pre>\n<br/>";
 			
 			return $this->renderPage()->addField(
