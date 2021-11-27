@@ -15,7 +15,7 @@ abstract class MethodCronjob extends Method
 {
 	public abstract function run();
 
-	public function crontabRunAtExpression()
+	public function runAt()
 	{
 		return "* * * * *";
 	}
