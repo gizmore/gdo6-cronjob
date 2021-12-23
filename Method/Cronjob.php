@@ -8,6 +8,7 @@ use GDO\Form\GDT_Submit;
 use GDO\Form\MethodForm;
 use Exception;
 use GDO\UI\GDT_HTML;
+use GDO\User\GDO_User;
 
 /**
  * Development aid for testing cronjobs.
@@ -31,6 +32,9 @@ class Cronjob extends MethodForm
 	{
 		try
 		{
+			$user = GDO_User::current();
+			GDO_User::setCurrent(GDO_User::system());
+			
 			ob_start();
 			
 			echo "<pre>";
@@ -48,6 +52,7 @@ class Cronjob extends MethodForm
 		finally
 		{
 			ob_end_clean();
+			GDO_User::setCurrent($user);
 		}
 	}
 	
