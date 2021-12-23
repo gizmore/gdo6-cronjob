@@ -12,7 +12,7 @@ use GDO\Core\Application;
  * Convinience cronjob launcher.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.2
  * @since 6.5.0
  * @see MethodCronjob
  */
@@ -69,7 +69,7 @@ final class Cronjob
 		
 		$module = Module_Cronjob::instance();
 		$lastRun = $module->cfgLastRun();
-		$dt = Time::getDateTime($lastRun);
+		$dt = Time::parseDateTimeDB($lastRun);
 		$minute = $dt->format('Y-m-d H:i');
 		$dt = Time::parseDate($minute, Time::UTC, 'Y-m-d H:i');
 		$now = Application::$TIME;
