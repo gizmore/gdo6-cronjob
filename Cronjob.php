@@ -18,12 +18,15 @@ use GDO\Core\Application;
  */
 final class Cronjob
 {
+	private static $FORCE = false;
+	
 	/**
 	 * Cronjobs main.
 	 * Loop over all enabled modules to run cronjob.
 	 */
-	public static function run()
+	public static function run($force=false)
 	{
+		self::$FORCE = $force;
 	    GDO_User::setCurrent(GDO_User::system());
 		$modules = ModuleLoader::instance()->loadModulesCache();
 		foreach ($modules as $module)
@@ -59,6 +62,11 @@ final class Cronjob
 	
 	private static function shouldRun(MethodCronjob $method)
 	{
+		if (self::$FORCE)
+		{
+			return true;
+		}
+		
 		$module = Module_Cronjob::instance();
 		$lastRun = $module->cfgLastRun();
 		$dt = Time::getDateTime($lastRun);
@@ -150,7 +158,7 @@ final class Cronjob
 			]);
 			$db->transactionEnd();
 		}
-		catch (\Exception $ex)
+		catch (\Throwable $ex)
 		{
 		    if (isset($db))
 		    {
