@@ -26,7 +26,7 @@ class Module_Cronjob extends GDO_Module
 	
 	public function cfgLastRun()
 	{
-		return $this->getConfigValue('last_run');
+		return $this->getConfigVar('last_run');
 	}
 	
 	public function setLastRun()
