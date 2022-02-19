@@ -10,7 +10,7 @@ use GDO\Core\Method;
  * Module_Cronjob takes care of interval computations.
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 6.11.4
  * @since 6.1.0
  */
 abstract class MethodCronjob extends Method
